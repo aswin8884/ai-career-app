@@ -24,7 +24,7 @@ function App() {
 const fetchPrediction = async ({ jobRole, industry }) => {
     setIsLoading(true);
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const API_URL = import.meta.env.VITE_API_URL || 'https://ai-career-app.onrender.com';
       
       const response = await axios.post(`${API_URL}/api/predict/`, {
         job_role: jobRole,
