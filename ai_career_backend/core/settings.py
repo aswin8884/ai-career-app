@@ -128,7 +128,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Make sure these are EXACTLY your Vercel URL
 CORS_ALLOWED_ORIGINS = [
-    "https://ai-career-app-one.vercel.app", # Your actual Vercel link
-    "http://localhost:5173",               # For local testing
+    "https://ai-career-app-one.vercel.app",
+    "http://localhost:5173",
 ]
+
+# Ensure this is also True
+CORS_ALLOW_CREDENTIALS = True
