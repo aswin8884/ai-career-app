@@ -7,9 +7,25 @@ import ResultsDashboard from './components/ResultsDashboard';
 function App() {
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAwaking, setIsAwaking] = useState(false); // NEW: Tracks if server is waking up
-  
+  const [isAwaking, setIsAwaking] = useState(false); 
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // --- NEW: THE PRE-WAKE TRICK ---
+  // This runs exactly once when the user first opens your website.
+  useEffect(() => {
+    const wakeUpBackend = async () => {
+      try {
+        const API_URL = import.meta.env.VITE_API_URL || 'https://ai-career-app.onrender.com';
+        // We don't care about the response, we just want to force Render to start booting up!
+        fetch(`${API_URL}/api/`); 
+        console.log("Knocked on the backend door to wake it up! 🚪");
+      } catch (error) {
+        // Ignore errors here, the goal is just to send the ping.
+      }
+    };
+    wakeUpBackend();
+  }, []); // The empty array [] means it only runs on the first page load.
+  // -------------------------------
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -22,15 +38,15 @@ function App() {
 
   const fetchPrediction = async ({ jobRole, industry }) => {
     setIsLoading(true);
-    setIsAwaking(false); // Reset on new request
+    setIsAwaking(false);
 
-    // NEW: If the request takes more than 4 seconds, assume the Render server is waking up
+    // If the server is STILL waking up after 4 seconds of clicking the button, show the banner
     const wakeUpTimer = setTimeout(() => {
       setIsAwaking(true);
     }, 4000);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const API_URL = import.meta.env.VITE_API_URL || 'https://ai-career-app.onrender.com';
       
       const response = await axios.post(`${API_URL}/api/predict/`, {
         job_role: jobRole,
@@ -41,7 +57,6 @@ function App() {
       console.error("Error connecting to Django:", error);
       alert("Error: Please ensure your Django server is running.");
     } finally {
-      // NEW: Clear the timer and reset states when the request finishes
       clearTimeout(wakeUpTimer);
       setIsLoading(false);
       setIsAwaking(false);
@@ -62,7 +77,7 @@ function App() {
           </p>
         </div>
 
-        {/* NEW: Friendly Warning Alert */}
+        {/* The Friendly UX Warning Banner */}
         {isAwaking && (
           <div className="max-w-2xl mx-auto mb-8 p-4 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-xl flex items-center justify-center gap-3 animate-in fade-in duration-500">
             <svg className="animate-spin h-5 w-5 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -70,7 +85,7 @@ function App() {
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             <p className="text-sm font-medium text-indigo-800 dark:text-indigo-300">
-              Waking up the AI server! Since this is a free host, this first request might take up to 50 seconds. Hang tight! 🚀
+              Waking up the AI server! Since this is a free host, this first request might take a few moments. Hang tight! 🚀
             </p>
           </div>
         )}
