@@ -10,13 +10,10 @@ function App() {
   const [isAwaking, setIsAwaking] = useState(false); 
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // --- NEW: THE PRE-WAKE TRICK ---
-  // This runs exactly once when the user first opens your website.
   useEffect(() => {
     const wakeUpBackend = async () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL || 'https://ai-career-app.onrender.com';
-        // We don't care about the response, we just want to force Render to start booting up!
         fetch(`${API_URL}/api/`); 
         console.log("Knocked on the backend door to wake it up! 🚪");
       } catch (error) {
@@ -76,8 +73,7 @@ function App() {
             Powered by our Machine Learning model. Analyze your current role and discover the safest tech transitions with high skill demand.
           </p>
         </div>
-
-        {/* The Friendly UX Warning Banner */}
+        
         {isAwaking && (
           <div className="max-w-2xl mx-auto mb-8 p-4 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-xl flex items-center justify-center gap-3 animate-in fade-in duration-500">
             <svg className="animate-spin h-5 w-5 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

@@ -8,7 +8,6 @@ import html2pdf from 'html2pdf.js';
 const ResultsDashboard = ({ results, isDarkMode }) => {
   const isHighRisk = results.automation_risk_percent > 40;
   
-  // Dynamic colors for the chart based on dark mode
   const textColor = isDarkMode ? 'white' : '#475569';
   const gridColor = isDarkMode ? '#334155' : '#e2e8f0';
 

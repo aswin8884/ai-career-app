@@ -70,7 +70,6 @@ def generate_coach_plan(request):
         if not GEMINI_API_KEY:
             return Response({"error": "API key not configured."}, status=500)
 
-        # ✨ THE UPGRADED, WORLD-CLASS PROMPT
         prompt = f"""
         You are an elite Silicon Valley career coach. A user is currently a '{current_role}' and wants to transition into a safer, high-growth role as a '{target_role}'.
         
@@ -95,5 +94,5 @@ def generate_coach_plan(request):
         return Response({"coach_plan": response.text})
         
     except Exception as e:
-        print(f"🔥 GEMINI API ERROR: {str(e)}") 
+        print(f"GEMINI API ERROR: {str(e)}") 
         return Response({"error": str(e)}, status=400)
