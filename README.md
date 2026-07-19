@@ -5,12 +5,12 @@ personalised, AI-written guidance. It combines a trained classification model wi
 a large language model: the model scores the outcome, and the LLM explains it in
 natural language.
 
-**🔗 Live demo:** _[add your deployment URL here]_
 
+**Live demo:** https://ai-career-app-one.vercel.app/
 
-[AI Career Path Predictor](images/ai_career_img1.png)
-[AI Career Path Predictor](images/ai_career_img2.png)
-[AI Career Path Predictor](images/ai_career_img3.png)
+![AI Career Path Predictor](images/ai_career_img1.png)
+![AI Career Path Predictor](images/ai_career_img2.png)
+![AI Career Path Predictor](images/ai_career_img3.png)
 
 ---
 
